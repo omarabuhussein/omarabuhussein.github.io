@@ -13,19 +13,19 @@ serie: learn
 
 To get Enabled CiviCRM components you can use :
 
-{% highlight javascript %}
+```php?start_inline=1
 $config = CRM_Core_Config::singleton();
 $enableComponents = $config->enableComponents);
 return in_array('CiviCase', $config->enableComponents);
-{% endhighlight %}
+```
 
 
 To check if specific component is enabled :
 
-{% highlight javascript %}
+```php?start_inline=1
 $config = CRM_Core_Config::singleton();
 $enableComponents = $config->enableComponents);
 if (in_array('CiviCase', $config->enableComponents)) {
   // Do Stuff
 }
-{% endhighlight %}
+```
