@@ -11,15 +11,6 @@ categories:
 serie: learn
 ---
 
-To get Enabled CiviCRM components you can use :
-
-```php?start_inline=1
-$config = CRM_Core_Config::singleton();
-$enableComponents = $config->enableComponents);
-return in_array('CiviCase', $config->enableComponents);
-```
-
-
 To check if specific extension is enabled :
 
 ```php?start_inline=1
@@ -31,7 +22,7 @@ $isEnabled = CRM_Core_DAO::getFieldValue(
 );
 ```
 
-Where EXTENSION_KEY = you extension unique key , for example :
+Where EXTENSION_KEY = the extension unique key , for example :
 
 ```php?start_inline=1
 $isEnabled = CRM_Core_DAO::getFieldValue(
@@ -42,13 +33,15 @@ $isEnabled = CRM_Core_DAO::getFieldValue(
 );
 ```
 
-You can find EXTENSION_KEY inside the extension *info.xml* file :
+You can find *EXTENSION_KEY* inside the extension *info.xml* file :
 
 ```xml
 <?xml version="1.0"?>
 <extension key="uk.co.compucorp.civicrm.tasksassignments" type="module">
   <file>tasksassignments</file>
   <name>Tasks and assignments</name>
+  .....
+   ...etc
 ```  
 
 hence
