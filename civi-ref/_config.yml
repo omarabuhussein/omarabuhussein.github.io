@@ -1,12 +1,12 @@
 # Site settings
-title: Lorem Ipsum - Web Developer
-description: "A blog about lorem ipsum ..."
-baseurl: "" # the subpath of your site
+title: CiviCRM Reference
+description: "CiviCRM Reference"
+baseurl: "/civi-ref" # the subpath of your site
 url: "http://omarabuhussein.github.io"
 
 # User settings
 username: omarabuhussein
-user_title: Lorem Ipsum - FrontEnd
+user_title: Blank
 email: opetmar91@gmail.com
 twitter_username: loremipsum
 github_username:  omarabuhussein
