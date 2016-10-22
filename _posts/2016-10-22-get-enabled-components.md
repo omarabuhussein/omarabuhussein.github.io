@@ -22,7 +22,7 @@ return in_array('CiviCase', $config->enableComponents);
 
 To check if specific component is enabled :
 
-{% highlight php javascript %}
+{% highlight javascript %}
 $config = CRM_Core_Config::singleton();
 $enableComponents = $config->enableComponents);
 if (in_array('CiviCase', $config->enableComponents)) {
