@@ -1,1 +1,9 @@
 <script src="{{ "/assets/js/main.js" | prepend: site.baseurl }}"></script>
+<script>
+$(document).keydown(function(e){
+    if(e.code == 'KeyS') {
+        $('#fade').trigger('click');
+        $("#search").trigger('click');
+    }
+})
+ </script>
