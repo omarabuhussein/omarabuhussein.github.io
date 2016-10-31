@@ -1,4 +1,3 @@
-
 ---
 layout: post
 title:  "Get Extension Directory"
