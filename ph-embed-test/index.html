@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Embed Test Page</title>
+  <style>
+    :root { color-scheme: light dark; --fg: #1f1f1f; --muted: #595959; --bg: #ffffff; --line: #d9d9d9; }
+    @media (prefers-color-scheme: dark) { :root { --fg: #f0f0f0; --muted: #bfbfbf; --bg: #141414; --line: #434343; } }
+    body { margin: 0; padding: 24px 16px; font: 16px/1.5 system-ui, sans-serif; color: var(--fg); background: var(--bg); }
+    main { max-width: 960px; margin: 0 auto; }
+    p, li { color: var(--muted); }
+    form { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+    input { flex: 1 1 420px; min-width: 0; padding: 8px; font: inherit; border: 1px solid var(--line); border-radius: 6px; }
+    button { padding: 8px 16px; font: inherit; border-radius: 6px; border: 1px solid var(--line); cursor: pointer; }
+    #status { font-family: ui-monospace, monospace; font-size: 13px; }
+    iframe { display: block; width: 100%; height: 1400px; border: 1px dashed var(--line); border-radius: 8px; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Embed test page</h1>
+  <p>
+    This page stands in for a charity website. It shows a Pineapplehead page in a cross-origin iframe with
+    <code>allow="payment *"</code>, to test wallets such as Google Pay in the Stripe Payment Element.
+  </p>
+  <form id="load-form">
+    <input id="src" type="url" required placeholder="https://example.trycloudflare.com/poc/donate/your-public-link">
+    <button type="submit">Load</button>
+  </form>
+  <ul id="status">
+    <li>Top-level origin: <span id="origin"></span></li>
+    <li>Payment Request API in this browser: <span id="payment-request"></span></li>
+    <li>iframe source: <span id="current-src">none</span></li>
+  </ul>
+  <iframe id="frame" title="Pineapplehead form" allow="payment *"></iframe>
+</main>
+<script>
+  // Only tunnel hosts are accepted, so this public page cannot be used to frame other sites.
+  const ALLOWED_HOSTS = [/\.trycloudflare\.com$/, /\.ngrok-free\.app$/, /\.ngrok\.app$/];
+
+  const frame = document.getElementById('frame');
+  const input = document.getElementById('src');
+  const currentSrc = document.getElementById('current-src');
+
+  document.getElementById('origin').textContent = window.location.origin;
+  document.getElementById('payment-request').textContent = 'PaymentRequest' in window ? 'available' : 'not available';
+
+  function load(value) {
+    let url;
+    try {
+      url = new URL(value);
+    } catch (error) {
+      currentSrc.textContent = 'not a valid URL';
+      return;
+    }
+
+    if (url.protocol !== 'https:' || !ALLOWED_HOSTS.some((host) => host.test(url.hostname))) {
+      currentSrc.textContent = 'refused: use an https tunnel URL';
+      return;
+    }
+
+    frame.src = url.href;
+    currentSrc.textContent = url.href;
+    history.replaceState(null, '', '?src=' + encodeURIComponent(url.href));
+  }
+
+  document.getElementById('load-form').addEventListener('submit', (event) => {
+    event.preventDefault();
+    load(input.value);
+  });
+
+  const initial = new URLSearchParams(window.location.search).get('src');
+  if (initial) {
+    input.value = initial;
+    load(initial);
+  }
+</script>
+</body>
+</html>
